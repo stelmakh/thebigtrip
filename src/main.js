@@ -277,14 +277,39 @@ const createTripCostTemplate = () => {
   );
 };
 
+const EVENT_COUNT = 3;
 
 /**
  * render HTML
  * @param {document node} container
  * @param {document node}template
- * @param {insertAdjacentHTML param}place
+ * @param {string}place
  * @return {HTML}
  */
 const render = (container, template, place='beforeend') => {
   container.insertAdjacentHTML(place, template);
 }
+
+const tripMainElement = document.querySelector('.trip-main');
+const tripControlElement = tripMainElement.querySelector('.trip-controls');
+const tripMainMenuElement = tripControlElement.querySelector(`.visually-hidden:first-of-type`);
+const tripBoardsElement = document.querySelector('.trip-events');
+
+render(tripMainMenuElement,createMenuTemplate(), 'afterend');
+render(tripControlElement, createFiltersTemplate());
+render(tripBoardsElement, createSortTemplate());
+render(tripBoardsElement, createEventEditTemplate());
+render(tripBoardsElement, createEventPointTemplate());
+
+const tripsEventsListElement = tripBoardsElement.querySelector('.trip-events__list');
+
+for (let i = 0; i < EVENT_COUNT ; i+=1) {
+  render(tripsEventsListElement, createEventTemplate());
+}
+
+render(tripMainElement, createTripInfoTemplate(), 'afterbegin');
+
+const tripInfoElement = tripMainElement.querySelector('.trip-main__trip-info');
+
+render(tripInfoElement, createTripCostTemplate());
+
