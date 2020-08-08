@@ -279,9 +279,9 @@ const EVENT_COUNT = 3;
 
 /**
  * render HTML
- * @param {document node} container
+ * @param {object} container
  * @param {string} template
- * @param {string}place
+ * @param {string} place
  */
 const render = (container, template, place = 'beforeend') => {
   container.insertAdjacentHTML(place, template);
