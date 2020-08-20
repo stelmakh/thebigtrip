@@ -6,9 +6,10 @@ import {createEventPointTemplate} from './components/event-point';
 import {createEventTemplate} from './components/events-item';
 import {createTripInfoTemplate} from './components/trip-info';
 import {createTripCostTemplate} from './components/trip-cost';
+import {generateTravelPoint} from './mock/point';
 
+console.log(generateTravelPoint());
 const EVENT_COUNT = 3;
-
 /**
  * render HTML
  * @param {object} container
