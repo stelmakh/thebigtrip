@@ -9,7 +9,7 @@ import {createTripCostTemplate} from './components/trip-cost';
 import {generateTravelPoint} from './mock/point';
 
 console.log(generateTravelPoint());
-const EVENT_COUNT = 3;
+const EVENT_COUNT = 7;
 /**
  * render HTML
  * @param {object} container
@@ -25,18 +25,32 @@ const tripControlElement = tripMainElement.querySelector(`.trip-controls`);
 const tripMainMenuElement = tripControlElement.querySelector(`.visually-hidden:first-of-type`);
 const tripBoardsElement = document.querySelector(`.trip-events`);
 
+// Menu template (Table, Stats)
 render(tripMainMenuElement, createMenuTemplate(), `afterend`);
+
+// Filter template (everything, future, past)
 render(tripControlElement, createFiltersTemplate());
+
+// sort buttons (event, time, price);
 render(tripBoardsElement, createSortTemplate());
+
+// event edit or new event form
 render(tripBoardsElement, createEventEditTemplate());
+
+// trip days container
 render(tripBoardsElement, createEventPointTemplate());
 
 const tripsEventsListElement = tripBoardsElement.querySelector(`.trip-events__list`);
 
 for (let i = 0; i < EVENT_COUNT; i += 1) {
+  // day event list
   render(tripsEventsListElement, createEventTemplate());
 }
+
+// top page info (price, points)
 render(tripMainElement, createTripInfoTemplate(), `afterbegin`);
 const tripInfoElement = tripMainElement.querySelector(`.trip-main__trip-info`);
+
+// top trip info cost
 render(tripInfoElement, createTripCostTemplate());
 
