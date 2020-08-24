@@ -18,7 +18,7 @@ const generateAdditionalOffer = ()=> {
     .map(() => getRandomArrayItem(offersList));
 };
 
-const generateDescription = ()=> {
+const generateDestination = ()=> {
   const descriptions = [
     `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
     `Cras aliquet varius magna, non porta ligula feugiat eget.`,
@@ -56,17 +56,46 @@ const generateDescription = ()=> {
   };
 };
 
+// Генерируем случайное время начала события
+const generateStartTime = ()=> {
+  const maxDaysGap = 7;
+  const daysGap = getRandomInteger(-maxDaysGap, maxDaysGap);
+  const startTime = new Date();
+  startTime.setDate(startTime.getDate() + daysGap);
+  const hours = getRandomInteger(0, 23);
+  const minutes = 5 * getRandomInteger(0, 11);
+
+  startTime.setHours(hours, minutes, 0, 0);
+  return new Date(startTime);
+};
+
+// Генерируем случайное время конца события
+const generateEndTime = (startTime)=> {
+  const endTime = new Date(startTime);
+  const day = getRandomInteger(0, 2);
+  const hour = getRandomInteger(0, 23);
+  const minutes = 5 * getRandomInteger(0, 11);
+  endTime.setTime(startTime.getTime() + (day * 24 * 60 * 60 * 1000) + (hour * 60 * 60 * 1000) + (minutes * 60 * 1000));
+
+  return new Date(endTime);
+};
+
+const generatePrice = ()=> {
+  return 10 * (getRandomInteger(1, 30));
+};
+
 export const generateTravelPoint = ()=> {
   const additionalOffer = generateAdditionalOffer();
-  const point = getRandomArrayItem(points);
-  const city = getRandomArrayItem(cities);
-  const description = generateDescription();
+  const startTime = generateStartTime();
   return {
-    point,
-    city,
-    additionalOffer,
-    // additionalOffer: additionalOffer.length === 0 ? null : additionalOffer,
-    description,
+    price: generatePrice(),
+    point: getRandomArrayItem(points),
+    city: getRandomArrayItem(cities),
+    additionalOffer: additionalOffer.length === 0 ? null : additionalOffer,
+    description: generateDestination(),
+    startTime,
+    endTime: generateEndTime(startTime),
+    isFavorite: Boolean(getRandomInteger(0, 1))
   };
 };
 
