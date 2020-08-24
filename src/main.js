@@ -8,14 +8,16 @@ import {createTripInfoTemplate} from './components/trip-info';
 import {createTripCostTemplate} from './components/trip-cost';
 import {generateTravelPoint} from './mock/point';
 
-console.log(generateTravelPoint());
+
 const EVENT_COUNT = 7;
 
 const travelPointData = new Array(EVENT_COUNT)
   .fill()
   .map(generateTravelPoint);
-
-console.log(travelPointData);
+// Sort by date
+const sortedTravelPoint = travelPointData.sort((a, b)=> {
+  return a.startTime.getTime() - b.startTime.getTime();
+});
 /**
  * render HTML
  * @param {object} container
@@ -41,16 +43,17 @@ render(tripControlElement, createFiltersTemplate());
 render(tripBoardsElement, createSortTemplate());
 
 // event edit or new event form
-render(tripBoardsElement, createEventEditTemplate());
+render(tripBoardsElement, createEventEditTemplate(sortedTravelPoint[0]));
 
 // trip days container
 render(tripBoardsElement, createEventPointTemplate());
 
 const tripsEventsListElement = tripBoardsElement.querySelector(`.trip-events__list`);
 
-for (let i = 0; i < EVENT_COUNT; i += 1) {
+for (let i = 1; i < EVENT_COUNT; i += 1) {
+
   // day event list
-  render(tripsEventsListElement, createEventTemplate(travelPointData[i]));
+  render(tripsEventsListElement, createEventTemplate(sortedTravelPoint[i]));
 }
 
 // top page info (price, points)

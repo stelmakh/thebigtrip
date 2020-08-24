@@ -13,9 +13,11 @@ const getRandomArrayItem = (arr)=> {
 
 const generateAdditionalOffer = ()=> {
   // return getRandomArrayItem(offersList);
-  return Array(getRandomInteger(0, offersList.length - 1))
+  const noUniqueOffers = new Array(getRandomInteger(0, offersList.length - 1))
     .fill()
     .map(() => getRandomArrayItem(offersList));
+  // only unique offers return
+  return [...new Set(noUniqueOffers)];
 };
 
 const generateDestination = ()=> {
