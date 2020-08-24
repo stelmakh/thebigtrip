@@ -10,6 +10,12 @@ import {generateTravelPoint} from './mock/point';
 
 console.log(generateTravelPoint());
 const EVENT_COUNT = 7;
+
+const travelPointData = new Array(EVENT_COUNT)
+  .fill()
+  .map(generateTravelPoint);
+
+console.log(travelPointData);
 /**
  * render HTML
  * @param {object} container
@@ -44,7 +50,7 @@ const tripsEventsListElement = tripBoardsElement.querySelector(`.trip-events__li
 
 for (let i = 0; i < EVENT_COUNT; i += 1) {
   // day event list
-  render(tripsEventsListElement, createEventTemplate());
+  render(tripsEventsListElement, createEventTemplate(travelPointData[i]));
 }
 
 // top page info (price, points)
