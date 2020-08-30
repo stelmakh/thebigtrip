@@ -9,6 +9,7 @@ import {createTripCostTemplate} from './components/trip-cost';
 import {createDayTemplate} from './components/day';
 import {EVENT_DAY} from './constants';
 import {travelPoint} from './mock/travel';
+import {getRandomInteger} from './utils';
 
 // generate all mock day
 const travelPointAll = new Array(EVENT_DAY)
@@ -18,10 +19,28 @@ const travelPointAll = new Array(EVENT_DAY)
     return a.day.getTime() - b.day.getTime();
   })
 
+// only info array
 const allPointInfo = travelPointAll.map((item) => {
   return item.info;
 })
 
+const findTravelPoints = () => {
+  const firstTravelDay = allPointInfo[0];
+  const middleTravelDay = allPointInfo[Math.round(allPointInfo.length / 2)];
+  const lastTravelDay = allPointInfo[allPointInfo.length - 1];
+  const firstPoint = firstTravelDay[0].city;
+  const middlePoint = middleTravelDay[getRandomInteger(0, middleTravelDay.length - 1)].city;
+  const finalPoint = lastTravelDay[lastTravelDay.length - 1].city;
+
+  return {
+    firstPoint,
+    middlePoint,
+    finalPoint
+  }
+}
+
+const travelPoints = findTravelPoints();
+console.log(travelPoints)
 
 /**
  * render HTML
@@ -70,7 +89,7 @@ tripsEventsListElement.forEach((item, index) => {
 })
 
 // top page info (price, points)
-render(tripMainElement, createTripInfoTemplate(), `afterbegin`);
+render(tripMainElement, createTripInfoTemplate(travelPoints), `afterbegin`);
 const tripInfoElement = tripMainElement.querySelector(`.trip-main__trip-info`);
 
 // top trip info cost
