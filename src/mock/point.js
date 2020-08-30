@@ -1,4 +1,5 @@
-import {getRandomInteger} from '../utils';
+import {getRandomInteger, generateStartTime, generateEndTime} from '../utils';
+import {EVENT_COUNT} from '../constants';
 
 const points = [`taxi`, `bus`, `train`, `ship`, `transport`, `drive`, `flight`, `check-in`, `sightseeing`, `restaurant`];
 const cities = [`Oslo`, `Stockholm`, `Los-Angeles`, `New-York`, `Boston`, `Pekin`];
@@ -58,29 +59,7 @@ const generateDestination = ()=> {
   };
 };
 
-// Генерируем случайное время начала события
-const generateStartTime = ()=> {
-  const maxDaysGap = 7;
-  const daysGap = getRandomInteger(-maxDaysGap, maxDaysGap);
-  const startTime = new Date();
-  startTime.setDate(startTime.getDate() + daysGap);
-  const hours = getRandomInteger(0, 23);
-  const minutes = 5 * getRandomInteger(0, 11);
 
-  startTime.setHours(hours, minutes, 0, 0);
-  return new Date(startTime);
-};
-
-// Генерируем случайное время конца события
-const generateEndTime = (startTime)=> {
-  const endTime = new Date(startTime);
-  const day = getRandomInteger(0, 2);
-  const hour = getRandomInteger(0, 23);
-  const minutes = 5 * getRandomInteger(0, 11);
-  endTime.setTime(startTime.getTime() + (day * 24 * 60 * 60 * 1000) + (hour * 60 * 60 * 1000) + (minutes * 60 * 1000));
-
-  return new Date(endTime);
-};
 
 const generatePrice = ()=> {
   return 10 * (getRandomInteger(1, 30));
@@ -100,5 +79,7 @@ export const generateTravelPoint = ()=> {
     isFavorite: Boolean(getRandomInteger(0, 1))
   };
 };
+
+
 
 

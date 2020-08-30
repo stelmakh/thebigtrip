@@ -60,9 +60,35 @@ export const getTimeBetween = (startDate, endDate) => {
 
 
 export function diffMinutes(dt2, dt1) {
-
   let diff = (dt2.getTime() - dt1.getTime()) / 1000;
   diff = diff / 60;
   return Math.abs(Math.round(diff));
-
 }
+
+export const getDateISOFormat = (date) => {
+  return date.toISOString();
+}
+
+// Генерируем случайное время начала события
+export const generateStartTime = ()=> {
+  const maxDaysGap = 7;
+  const daysGap = getRandomInteger(-maxDaysGap, maxDaysGap);
+  const startTime = new Date();
+  startTime.setDate(startTime.getDate() + daysGap);
+  const hours = getRandomInteger(0, 23);
+  const minutes = 5 * getRandomInteger(0, 11);
+
+  startTime.setHours(hours, minutes, 0, 0);
+  return new Date(startTime);
+};
+
+// Генерируем случайное время конца события
+export const generateEndTime = (startTime)=> {
+  const endTime = new Date(startTime);
+  const day = getRandomInteger(0, 2);
+  const hour = getRandomInteger(0, 23);
+  const minutes = 5 * getRandomInteger(0, 11);
+  endTime.setTime(startTime.getTime() + (day * 24 * 60 * 60 * 1000) + (hour * 60 * 60 * 1000) + (minutes * 60 * 1000));
+
+  return new Date(endTime);
+};

@@ -7,17 +7,29 @@ import {createEventTemplate} from './components/events-item';
 import {createTripInfoTemplate} from './components/trip-info';
 import {createTripCostTemplate} from './components/trip-cost';
 import {generateTravelPoint} from './mock/point';
+import {EVENT_COUNT, EVENT_DAY} from './constants';
+import {travelPoint} from './mock/travel';
 
 
-const EVENT_COUNT = 5;
-
-const travelPointData = new Array(EVENT_COUNT)
+const travelPointDay = new Array(EVENT_COUNT)
   .fill()
   .map(generateTravelPoint);
+
+const travelPointAll = new Array(EVENT_DAY)
+  .fill()
+  .map(travelPoint);
+
 // Sort by date
-const sortedTravelPoint = travelPointData.sort((a, b)=> {
+const sortedTravelPoint = travelPointDay.sort((a, b) => {
   return a.startTime.getTime() - b.startTime.getTime();
 });
+
+export const sortedAllDay = travelPointAll.sort((a, b) => {
+  return a.day.getTime() - b.day.getTime();
+})
+
+console.log(sortedAllDay);
+
 /**
  * render HTML
  * @param {object} container
@@ -46,12 +58,13 @@ render(tripBoardsElement, createSortTemplate());
 render(tripBoardsElement, createEventEditTemplate(sortedTravelPoint[0]));
 
 // trip days container
-render(tripBoardsElement, createEventPointTemplate());
+
+render(tripBoardsElement, createEventPointTemplate(sortedAllDay));
+
 
 const tripsEventsListElement = tripBoardsElement.querySelector(`.trip-events__list`);
 
 for (let i = 1; i < EVENT_COUNT; i += 1) {
-
   // day event list
   render(tripsEventsListElement, createEventTemplate(sortedTravelPoint[i]));
 }
