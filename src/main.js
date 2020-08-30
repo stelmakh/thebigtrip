@@ -9,7 +9,7 @@ import {createTripCostTemplate} from './components/trip-cost';
 import {generateTravelPoint} from './mock/point';
 
 
-const EVENT_COUNT = 7;
+const EVENT_COUNT = 5;
 
 const travelPointData = new Array(EVENT_COUNT)
   .fill()
