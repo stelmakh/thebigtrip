@@ -5,11 +5,11 @@
  */
 const createEventEditAdditionalOfferTemplate = (additionalOffers)=> {
   const offers = additionalOffers !== null
-    ? additionalOffers.map((offerItem) => {
+    ? additionalOffers.map((offerItem, index) => {
       return (
         `<div class="event__offer-selector">
-       <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-1" type="checkbox" name="event-offer-luggage" checked>
-       <label class="event__offer-label" for="event-offer-luggage-1">
+       <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-${index}" type="checkbox" name="event-offer-luggage" checked>
+       <label class="event__offer-label" for="event-offer-luggage-${index}">
          <span class="event__offer-title">${offerItem.title}</span>
          &plus;
          &euro;&nbsp;<span class="event__offer-price">${offerItem.price}</span>

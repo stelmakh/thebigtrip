@@ -1,6 +1,6 @@
 import {getRandomInteger} from '../utils';
 
-const points = [`Taxi`, `Bus`, `Train`, `Ship`, `Transport`, `Drive`, `Flight`, `Check-in`, `Sightseeing`, `Restaurant`];
+const points = [`taxi`, `bus`, `train`, `ship`, `transport`, `drive`, `flight`, `check-in`, `sightseeing`, `restaurant`];
 const cities = [`Oslo`, `Stockholm`, `Los-Angeles`, `New-York`, `Boston`, `Pekin`];
 const offersList = [{title: `choose meal`, price: 10}, {title: `upgrade comfort`, price: 50},
   {title: `lanch`, price: 40}, {title: `airport transfer`, price: 20}, {title: `city tour`, price: 180}];
