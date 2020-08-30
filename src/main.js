@@ -23,7 +23,10 @@ const travelPointAll = new Array(EVENT_DAY)
 const allPointInfo = travelPointAll.map((item) => {
   return item.info;
 })
-
+/**
+ * @description find travel points
+ * @return {{finalPoint: string, firstPoint: string, middlePoint: string}}
+ */
 const findTravelPoints = () => {
   const firstTravelDay = allPointInfo[0];
   const middleTravelDay = allPointInfo[Math.round(allPointInfo.length / 2)];
@@ -38,9 +41,22 @@ const findTravelPoints = () => {
     finalPoint
   }
 }
+/**
+ * @description find start day travel and finally day travel;
+ * @return {{firstDay, lastDay: (string|string)}}
+ */
+const findTravelDays = () => {
+  const firstDay = travelPointAll[0].day;
+  const lastDay = travelPointAll[travelPointAll.length - 1].day;
+
+  return {
+    firstDay,
+    lastDay,
+  }
+}
 
 const travelPoints = findTravelPoints();
-console.log(travelPoints)
+const travelDays = findTravelDays();
 
 /**
  * render HTML
@@ -82,14 +98,17 @@ for (let i = 0; i < EVENT_DAY; i += 1) {
 // render day events in day
 const tripsEventsListElement = tripBoardsElement.querySelectorAll(`.trip-events__list`);
 tripsEventsListElement.forEach((item, index) => {
-  const dayInfo = allPointInfo[index];
+  const dayInfo = allPointInfo[index]
+    .sort((a, b) => {
+      return a.startTime.getTime() - b.startTime.getTime()
+    });
   for (let i = 0; i < dayInfo.length; i += 1) {
     render(item, createEventTemplate(dayInfo[i]))
   }
 })
 
 // top page info (price, points)
-render(tripMainElement, createTripInfoTemplate(travelPoints), `afterbegin`);
+render(tripMainElement, createTripInfoTemplate(travelPoints, travelDays), `afterbegin`);
 const tripInfoElement = tripMainElement.querySelector(`.trip-main__trip-info`);
 
 // top trip info cost
