@@ -7,33 +7,21 @@ import {createEventTemplate} from './components/events-item';
 import {createTripInfoTemplate} from './components/trip-info';
 import {createTripCostTemplate} from './components/trip-cost';
 import {createDayTemplate} from './components/day';
-import {generateTravelPoint} from './mock/point';
-import {EVENT_COUNT, EVENT_DAY} from './constants';
+import {EVENT_DAY} from './constants';
 import {travelPoint} from './mock/travel';
 
-
-const travelPointDay = new Array(EVENT_COUNT)
-  .fill(undefined)
-  .map(generateTravelPoint);
-
+// generate all mock day
 const travelPointAll = new Array(EVENT_DAY)
   .fill(undefined)
-  .map(travelPoint);
+  .map(travelPoint)
+  .sort((a, b) => {
+    return a.day.getTime() - b.day.getTime();
+  })
 
-const allPointInfo = [];
-
-
-// Sort by date
-const sortedTravelPoint = travelPointDay.sort((a, b) => {
-  return a.startTime.getTime() - b.startTime.getTime();
-});
-
-export const sortedAllDay = travelPointAll.sort((a, b) => {
-  return a.day.getTime() - b.day.getTime();
+const allPointInfo = travelPointAll.map((item) => {
+  return item.info;
 })
 
-console.log(sortedAllDay);
-console.log('sortedTravelPoint', sortedTravelPoint);
 
 /**
  * render HTML
@@ -60,35 +48,26 @@ render(tripControlElement, createFiltersTemplate());
 render(tripBoardsElement, createSortTemplate());
 
 // event edit or new event form
-render(tripBoardsElement, createEventEditTemplate(sortedTravelPoint[0]));
+render(tripBoardsElement, createEventEditTemplate(allPointInfo[0][0]));
 
 // trip days container
-render(tripBoardsElement, createEventPointTemplate(sortedAllDay));
+render(tripBoardsElement, createEventPointTemplate());
 
 const tripDays = tripBoardsElement.querySelector('.trip-days');
 
 // render day item
 for (let i = 0; i < EVENT_DAY; i += 1) {
-  render(tripDays, createDayTemplate(sortedAllDay[i], i));
-  allPointInfo.push(sortedAllDay[i].info)
+  render(tripDays, createDayTemplate(travelPointAll[i], i));
 }
 
+// render day events in day
 const tripsEventsListElement = tripBoardsElement.querySelectorAll(`.trip-events__list`);
-
 tripsEventsListElement.forEach((item, index) => {
-  const sortedDayInfo = allPointInfo[index]
-    .sort((a, b) => {
-      return a.startTime.getTime() - b.startTime.getTime()
-    });
-
-  for (let i = 0; i < sortedDayInfo.length; i += 1) {
-    render(item, createEventTemplate(sortedDayInfo[i]))
+  const dayInfo = allPointInfo[index];
+  for (let i = 0; i < dayInfo.length; i += 1) {
+    render(item, createEventTemplate(dayInfo[i]))
   }
 })
-
-// for (let i = 1; i < EVENT_COUNT; i += 1) {
-//   render(tripsEventsListElement, createEventTemplate(sortedTravelPoint[i]))
-// }
 
 // top page info (price, points)
 render(tripMainElement, createTripInfoTemplate(), `afterbegin`);
