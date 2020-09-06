@@ -3,7 +3,7 @@ import FiltersView from './components/filters';
 import SortTripView from './components/sort-trip';
 import EventEditView from './components/event-edit';
 import EventPointsView from './components/event-point';
-import {createEventTemplate} from './components/events-item';
+import EventsItemView from './components/events-item';
 import {createTripInfoTemplate} from './components/trip-info';
 import {createTripCostTemplate} from './components/trip-cost';
 import {createDayTemplate} from './components/day';
@@ -95,7 +95,7 @@ tripsEventsListElement.forEach((item, index) => {
       return a.startTime.getTime() - b.startTime.getTime();
     });
   for (let i = 0; i < dayInfo.length; i += 1) {
-    renderTemplate(item, createEventTemplate(dayInfo[i]));
+    renderElement(item, new EventsItemView(dayInfo[i]).getElement(), renderPosition.BEFOREEND);
   }
 });
 

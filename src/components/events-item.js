@@ -1,4 +1,4 @@
-import {prettyDate, getTimeBetween, diffMinutes} from '../utils';
+import {prettyDate, getTimeBetween, createElement} from '../utils';
 
 /**
  * @param {array|null} additionalOffers
@@ -22,7 +22,7 @@ const createAdditionalOfferTemplate = (additionalOffers) => {
  * @param {object} eventData
  * @return {string}
  */
-export const createEventTemplate = (eventData) => {
+const createEventTemplate = (eventData) => {
   const {point, city, startTime, endTime, price, additionalOffer} = eventData;
   return (
     `<li class="trip-events__item">
@@ -54,4 +54,21 @@ export const createEventTemplate = (eventData) => {
   );
 };
 
-
+export default class EventsItem {
+  constructor(eventData) {
+    this._eventDate = eventData;
+    this._element = null;
+  }
+  getTemplate() {
+    return createEventTemplate(this._eventDate);
+  }
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
+}
