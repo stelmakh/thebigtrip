@@ -2,15 +2,15 @@ import SiteMenuView from './components/site-menu';
 import FiltersView from './components/filters';
 import SortTripView from './components/sort-trip';
 import EventEditView from './components/event-edit';
-import {createEventPointTemplate} from './components/event-point';
+import EventPointsView from './components/event-point';
 import {createEventTemplate} from './components/events-item';
 import {createTripInfoTemplate} from './components/trip-info';
 import {createTripCostTemplate} from './components/trip-cost';
 import {createDayTemplate} from './components/day';
 import {EVENT_DAY} from './constants';
 import {travelPoint} from './mock/travel';
-import {getRandomInteger} from './utils';
-import {renderElement, renderTemplate, renderPosition} from './utils';
+import {getRandomInteger, renderElement, renderTemplate, renderPosition} from './utils';
+
 
 // generate all mock day
 const travelPointAll = new Array(EVENT_DAY)
@@ -78,7 +78,7 @@ renderElement(tripBoardsElement, new SortTripView().getElement(), renderPosition
 renderElement(tripBoardsElement, new EventEditView(allPointInfo[0][0]).getElement(), renderPosition.BEFOREEND);
 
 // trip days container
-renderTemplate(tripBoardsElement, createEventPointTemplate());
+renderElement(tripBoardsElement, new EventPointsView().getElement(), renderPosition.BEFOREEND);
 
 const tripDays = tripBoardsElement.querySelector(`.trip-days`);
 
