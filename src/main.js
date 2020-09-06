@@ -5,8 +5,8 @@ import EventEditView from './components/event-edit';
 import EventPointsView from './components/event-point';
 import EventsItemView from './components/events-item';
 import TripInfoView from './components/trip-info';
-import {createTripCostTemplate} from './components/trip-cost';
-import {createDayTemplate} from './components/day';
+import TripCostView from './components/trip-cost';
+import DayView from './components/day';
 import {allPointInfo, travelPointAll, travelDays, travelPoints} from './computed';
 import {EVENT_DAY} from './constants';
 import {renderElement, renderTemplate, renderPosition} from './utils';
@@ -36,7 +36,7 @@ const tripDays = tripBoardsElement.querySelector(`.trip-days`);
 
 // renderTemplate day item
 for (let i = 0; i < EVENT_DAY; i += 1) {
-  renderTemplate(tripDays, createDayTemplate(travelPointAll[i], i));
+  renderElement(tripDays, new DayView(travelPointAll[i], i).getElement(), renderPosition.BEFOREEND);
 }
 
 // renderTemplate day events in day
@@ -56,5 +56,5 @@ renderElement(tripMainElement, new TripInfoView(travelPoints, travelDays).getEle
 const tripInfoElement = tripMainElement.querySelector(`.trip-main__trip-info`);
 
 // top trip info cost
-renderTemplate(tripInfoElement, createTripCostTemplate());
+renderElement(tripInfoElement, new TripCostView().getElement(), renderPosition.BEFOREEND);
 

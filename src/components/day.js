@@ -1,4 +1,4 @@
-import {humanizeDate} from '../utils';
+import {humanizeDate, createElement} from '../utils';
 
 export const createDayTemplate = (info, index) => {
   const {day} = info;
@@ -8,5 +8,25 @@ export const createDayTemplate = (info, index) => {
           <time class="day__date" datetime="2019-03-18">${humanizeDate(day)}</time>
         </div>
         <ul class="trip-events__list"></ul>
-      </li>`
+      </li>`;
+};
+
+export default class Day {
+  constructor(info, index) {
+    this._element = null;
+    this._info = info;
+    this._index = index;
+  }
+  getTemplate() {
+    return createDayTemplate(this._info, this._index);
+  }
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate(this._info, this._index));
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
 }

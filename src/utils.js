@@ -25,7 +25,7 @@ export const renderElement = (container, element, place) => {
  * @param {string} template
  * @param {string} place
  */
-export const renderTemplate = (container, template, place = `beforeend`) => {
+export const renderTemplate = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
 
