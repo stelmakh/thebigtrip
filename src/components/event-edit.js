@@ -63,7 +63,7 @@ export const createEventEditTemplate = (editPointTemplateDate = {}) => {
     photos,
   } = description;
   return (
-    `<form class="trip-events__item  event  event--edit" action="#" method="post">
+    `<li class="trip-events__item"><form class="trip-events__item  event  event--edit" action="#" method="post">
     <header class="event__header">
       <div class="event__type-wrapper">
         <label class="event__type  event__type-btn" for="event-type-toggle-1">
@@ -124,7 +124,7 @@ export const createEventEditTemplate = (editPointTemplateDate = {}) => {
         <label class="event__label  event__type-output" for="event-destination-1">
           ${point} to
         </label>
-        <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="Geneva" list="destination-list-1">
+        <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
         <datalist id="destination-list-1">
           <option value="Amsterdam"></option>
           <option value="Geneva"></option>
@@ -161,7 +161,7 @@ export const createEventEditTemplate = (editPointTemplateDate = {}) => {
         ${createEventEditPhoto(photos)}
       </section>
     </section>
-  </form>`
+  </form></li>`
   );
 };
 

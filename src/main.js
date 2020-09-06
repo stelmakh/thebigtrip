@@ -9,7 +9,7 @@ import TripCostView from './components/trip-cost';
 import DayView from './components/day';
 import {allPointInfo, travelPointAll, travelDays, travelPoints} from './computed';
 import {EVENT_DAY} from './constants';
-import {renderElement, renderTemplate, renderPosition} from './utils';
+import {render, renderPosition} from './utils';
 
 
 const tripMainElement = document.querySelector(`.trip-main`);
@@ -18,26 +18,58 @@ const tripMainMenuElement = tripControlElement.querySelector(`.visually-hidden:f
 const tripBoardsElement = document.querySelector(`.trip-events`);
 
 // Menu template (Table, Stats)
-renderElement(tripMainMenuElement, new SiteMenuView().getElement(), renderPosition.AFTERBEGIN);
+render(tripMainMenuElement, new SiteMenuView().getElement(), renderPosition.AFTERBEGIN);
 
 // Filter template (everything, future, past)
-renderElement(tripControlElement, new FiltersView().getElement(), renderPosition.BEFOREEND);
+render(tripControlElement, new FiltersView().getElement(), renderPosition.BEFOREEND);
 
 // sort buttons (event, time, price);
-renderElement(tripBoardsElement, new SortTripView().getElement(), renderPosition.BEFOREEND);
-
-// event edit or new event form
-renderElement(tripBoardsElement, new EventEditView(allPointInfo[0][0]).getElement(), renderPosition.BEFOREEND);
+render(tripBoardsElement, new SortTripView().getElement(), renderPosition.BEFOREEND);
 
 // trip days container
-renderElement(tripBoardsElement, new EventPointsView().getElement(), renderPosition.BEFOREEND);
+render(tripBoardsElement, new EventPointsView().getElement(), renderPosition.BEFOREEND);
 
 const tripDays = tripBoardsElement.querySelector(`.trip-days`);
 
 // renderTemplate day item
 for (let i = 0; i < EVENT_DAY; i += 1) {
-  renderElement(tripDays, new DayView(travelPointAll[i], i).getElement(), renderPosition.BEFOREEND);
+  render(tripDays, new DayView(travelPointAll[i], i).getElement(), renderPosition.BEFOREEND);
 }
+
+const eventRender = (container, eventData) => {
+  const eventComponent = new EventsItemView(eventData);
+  const eventEditComponent = new EventEditView(eventData);
+
+  const replaceCardToForm = () => {
+    container.replaceChild(eventEditComponent.getElement(), eventComponent.getElement());
+  };
+
+  const replaceFormToCard = () => {
+    container.replaceChild(eventComponent.getElement(), eventEditComponent.getElement());
+  };
+
+  const onEscDown = (evt) => {
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      evt.preventDefault();
+      replaceFormToCard();
+      document.removeEventListener(`keydown`, onEscDown);
+    }
+  };
+
+  eventComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
+    replaceCardToForm();
+    document.addEventListener(`keydown`, onEscDown);
+  });
+
+  eventEditComponent.getElement().querySelector(`form`).addEventListener(`submit`, (evt) => {
+    evt.preventDefault();
+    replaceFormToCard();
+    document.removeEventListener(`keydown`, onEscDown);
+  });
+
+  render(container, eventComponent.getElement(), renderPosition.BEFOREEND);
+};
+
 
 // renderTemplate day events in day
 const tripsEventsListElement = tripBoardsElement.querySelectorAll(`.trip-events__list`);
@@ -47,14 +79,15 @@ tripsEventsListElement.forEach((item, index) => {
       return a.startTime.getTime() - b.startTime.getTime();
     });
   for (let i = 0; i < dayInfo.length; i += 1) {
-    renderElement(item, new EventsItemView(dayInfo[i]).getElement(), renderPosition.BEFOREEND);
+    // render(item, new EventsItemView(dayInfo[i]).getElement(), renderPosition.BEFOREEND);
+    eventRender(item, dayInfo[i]);
   }
 });
 
 // top page info (price, points)
-renderElement(tripMainElement, new TripInfoView(travelPoints, travelDays).getElement(), renderPosition.AFTERBEGIN);
+render(tripMainElement, new TripInfoView(travelPoints, travelDays).getElement(), renderPosition.AFTERBEGIN);
 const tripInfoElement = tripMainElement.querySelector(`.trip-main__trip-info`);
 
 // top trip info cost
-renderElement(tripInfoElement, new TripCostView().getElement(), renderPosition.BEFOREEND);
+render(tripInfoElement, new TripCostView().getElement(), renderPosition.BEFOREEND);
 

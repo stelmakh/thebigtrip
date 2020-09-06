@@ -8,7 +8,7 @@ export const renderPosition = {
  * @param {HTMLElement} element
  * @param {string} place
  */
-export const renderElement = (container, element, place) => {
+export const render = (container, element, place) => {
   switch (place) {
     case renderPosition.AFTERBEGIN:
       container.prepend(element);
