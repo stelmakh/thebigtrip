@@ -7,57 +7,9 @@ import EventsItemView from './components/events-item';
 import {createTripInfoTemplate} from './components/trip-info';
 import {createTripCostTemplate} from './components/trip-cost';
 import {createDayTemplate} from './components/day';
+import {allPointInfo, travelPointAll, travelDays, travelPoints} from './computed';
 import {EVENT_DAY} from './constants';
-import {travelPoint} from './mock/travel';
-import {getRandomInteger, renderElement, renderTemplate, renderPosition} from './utils';
-
-
-// generate all mock day
-const travelPointAll = new Array(EVENT_DAY)
-  .fill(undefined)
-  .map(travelPoint)
-  .sort((a, b) => {
-    return a.day.getTime() - b.day.getTime();
-  });
-
-// only info array
-const allPointInfo = travelPointAll.map((item) => {
-  return item.info;
-});
-/**
- * @description find travel points
- * @return {{finalPoint: string, firstPoint: string, middlePoint: string}}
- */
-const findTravelPoints = () => {
-  const firstTravelDay = allPointInfo[0];
-  const middleTravelDay = allPointInfo[Math.round(allPointInfo.length / 2)];
-  const lastTravelDay = allPointInfo[allPointInfo.length - 1];
-  const firstPoint = firstTravelDay[0].city;
-  const middlePoint = middleTravelDay[getRandomInteger(0, middleTravelDay.length - 1)].city;
-  const finalPoint = lastTravelDay[lastTravelDay.length - 1].city;
-
-  return {
-    firstPoint,
-    middlePoint,
-    finalPoint
-  };
-};
-/**
- * @description find start day travel and finally day travel;
- * @return {{firstDay, lastDay: (string|string)}}
- */
-const findTravelDays = () => {
-  const firstDay = travelPointAll[0].day;
-  const lastDay = travelPointAll[travelPointAll.length - 1].day;
-
-  return {
-    firstDay,
-    lastDay,
-  };
-};
-
-const travelPoints = findTravelPoints();
-const travelDays = findTravelDays();
+import {renderElement, renderTemplate, renderPosition} from './utils';
 
 
 const tripMainElement = document.querySelector(`.trip-main`);
