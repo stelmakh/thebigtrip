@@ -1,5 +1,5 @@
 import SiteMenuView from './components/site-menu';
-import {createFiltersTemplate} from './components/filters';
+import FiltersView from './components/filters';
 import {createSortTemplate} from './components/sort-trip';
 import {createEventEditTemplate} from './components/event-edit';
 import {createEventPointTemplate} from './components/event-point';
@@ -69,7 +69,7 @@ const tripBoardsElement = document.querySelector(`.trip-events`);
 renderElement(tripMainMenuElement, new SiteMenuView().getElement(), renderPosition.AFTERBEGIN);
 
 // Filter template (everything, future, past)
-renderTemplate(tripControlElement, createFiltersTemplate());
+renderElement(tripControlElement, new FiltersView().getElement(), renderPosition.BEFOREEND);
 
 // sort buttons (event, time, price);
 renderTemplate(tripBoardsElement, createSortTemplate());

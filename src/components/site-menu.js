@@ -20,6 +20,7 @@ export default class SiteMenu {
     if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
+    return this._element;
   }
   removeElement() {
     this._element = null;
