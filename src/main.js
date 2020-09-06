@@ -4,7 +4,7 @@ import SortTripView from './components/sort-trip';
 import EventEditView from './components/event-edit';
 import EventPointsView from './components/event-point';
 import EventsItemView from './components/events-item';
-import {createTripInfoTemplate} from './components/trip-info';
+import TripInfoView from './components/trip-info';
 import {createTripCostTemplate} from './components/trip-cost';
 import {createDayTemplate} from './components/day';
 import {allPointInfo, travelPointAll, travelDays, travelPoints} from './computed';
@@ -52,7 +52,7 @@ tripsEventsListElement.forEach((item, index) => {
 });
 
 // top page info (price, points)
-renderTemplate(tripMainElement, createTripInfoTemplate(travelPoints, travelDays), `afterbegin`);
+renderElement(tripMainElement, new TripInfoView(travelPoints, travelDays).getElement(), renderPosition.AFTERBEGIN);
 const tripInfoElement = tripMainElement.querySelector(`.trip-main__trip-info`);
 
 // top trip info cost

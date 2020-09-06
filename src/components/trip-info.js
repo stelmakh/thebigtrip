@@ -1,6 +1,6 @@
-import {humanizeDate} from '../utils';
+import {humanizeDate, createElement} from '../utils';
 
-export const createTripInfoTemplate = (travelPoints, travelDays) => {
+const createTripInfoTemplate = (travelPoints, travelDays) => {
   const {firstPoint, middlePoint, finalPoint} = travelPoints;
   const {firstDay, lastDay} = travelDays;
 
@@ -14,4 +14,23 @@ export const createTripInfoTemplate = (travelPoints, travelDays) => {
   );
 };
 
+export default class TripInfo {
+  constructor(travelPoints, travelDays) {
+    this._element = null;
+    this._travelPoints = travelPoints;
+    this._travelDays = travelDays;
+  }
+  getTemplate() {
+    return createTripInfoTemplate(this._travelPoints, this._travelDays);
+  }
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
+}
 
