@@ -1,4 +1,4 @@
-import {getDateISOFormat} from '../utils';
+import {getDateISOFormat, createElement} from '../utils';
 
 
 /**
@@ -6,7 +6,7 @@ import {getDateISOFormat} from '../utils';
  * @param {object|null}additionalOffers
  * @return {string}
  */
-const createEventEditAdditionalOfferTemplate = (additionalOffers)=> {
+const createEventEditAdditionalOfferTemplate = (additionalOffers) => {
   const offers = additionalOffers !== null
     ? additionalOffers.map((offerItem, index) => {
       return (
@@ -31,19 +31,19 @@ const createEventEditAdditionalOfferTemplate = (additionalOffers)=> {
     : ``;
 };
 
-const createEventEditPhoto = (photoList)=> {
+const createEventEditPhoto = (photoList) => {
   return photoList
     ? `<div class="event__photos-container">
           <div class="event__photos-tape">
           ${photoList
-      .map((photo)=> {
-            return `<img class="event__photo" src="${photo}" alt="Event photo">`
-    })
-      .join('')}
+      .map((photo) => {
+        return `<img class="event__photo" src="${photo}" alt="Event photo">`;
+      })
+      .join(``)}
           </div>
         </div>`
     : ``;
-}
+};
 
 
 export const createEventEditTemplate = (editPointTemplateDate = {}) => {
@@ -60,7 +60,7 @@ export const createEventEditTemplate = (editPointTemplateDate = {}) => {
 
   const {
     description: title = ``,
-    photos
+    photos,
   } = description;
   return (
     `<form class="trip-events__item  event  event--edit" action="#" method="post">
@@ -165,6 +165,21 @@ export const createEventEditTemplate = (editPointTemplateDate = {}) => {
   );
 };
 
-
-
-
+export default class EventEdit {
+  constructor(editPointTemplateDate) {
+    this._element = null;
+    this._editData = editPointTemplateDate || {};
+  }
+  getTemplate() {
+    return createEventEditTemplate(this._editData);
+  }
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,7 +1,7 @@
 import SiteMenuView from './components/site-menu';
 import FiltersView from './components/filters';
 import SortTripView from './components/sort-trip';
-import {createEventEditTemplate} from './components/event-edit';
+import EventEditView from './components/event-edit';
 import {createEventPointTemplate} from './components/event-point';
 import {createEventTemplate} from './components/events-item';
 import {createTripInfoTemplate} from './components/trip-info';
@@ -75,7 +75,7 @@ renderElement(tripControlElement, new FiltersView().getElement(), renderPosition
 renderElement(tripBoardsElement, new SortTripView().getElement(), renderPosition.BEFOREEND);
 
 // event edit or new event form
-renderTemplate(tripBoardsElement, createEventEditTemplate(allPointInfo[0][0]));
+renderElement(tripBoardsElement, new EventEditView(allPointInfo[0][0]).getElement(), renderPosition.BEFOREEND);
 
 // trip days container
 renderTemplate(tripBoardsElement, createEventPointTemplate());
