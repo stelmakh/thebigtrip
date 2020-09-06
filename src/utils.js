@@ -1,20 +1,20 @@
 /**
- * @description generate random integer
+ * generate random integer
  * @param {number} a
  * @param {number} b
  * @return {number}
  */
-export const getRandomInteger = (a = 0, b = 1)=> {
+export const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-export const humanizeDate = (date)=> {
+export const humanizeDate = (date) => {
   return date.toLocaleString(
       `en-US`, {
         day: `numeric`,
-        month: `short`
+        month: `short`,
       });
 };
 
@@ -29,7 +29,6 @@ export function prettyDate(time) {
 
 export const getTimeBetween = (startDate, endDate) => {
   const gap = endDate.getTime() - startDate.getTime();
-
   const day = Math.floor(gap / 1000 / 60 / 60 / 24);
   const hour = Math.floor((gap / 1000 / 60 / 60) % 24);
   const minute = Math.floor((gap / 1000 / 60) % 60);
@@ -67,10 +66,13 @@ export function diffMinutes(dt2, dt1) {
 
 export const getDateISOFormat = (date) => {
   return date.toISOString();
-}
+};
 
-// Генерируем случайное время начала события
-export const generateStartTime = ()=> {
+/**
+ * Generate start event date
+ * @return {Date}
+ */
+export const generateStartTime = () => {
   const maxDaysGap = 7;
   const daysGap = getRandomInteger(-maxDaysGap, maxDaysGap);
   const startTime = new Date();
@@ -82,13 +84,16 @@ export const generateStartTime = ()=> {
   return new Date(startTime);
 };
 
-// Генерируем случайное время конца события
-export const generateEndTime = (startTime)=> {
+/**
+ * Generate end event date
+ * @param {Date} startTime
+ * @return {Date}
+ */
+export const generateEndTime = (startTime) => {
   const endTime = new Date(startTime);
   const day = getRandomInteger(0, 2);
   const hour = getRandomInteger(0, 23);
   const minutes = 5 * getRandomInteger(0, 11);
   endTime.setTime(startTime.getTime() + (day * 24 * 60 * 60 * 1000) + (hour * 60 * 60 * 1000) + (minutes * 60 * 1000));
-
   return new Date(endTime);
 };
