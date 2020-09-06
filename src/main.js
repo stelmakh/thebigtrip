@@ -1,6 +1,6 @@
 import SiteMenuView from './components/site-menu';
 import FiltersView from './components/filters';
-import {createSortTemplate} from './components/sort-trip';
+import SortTripView from './components/sort-trip';
 import {createEventEditTemplate} from './components/event-edit';
 import {createEventPointTemplate} from './components/event-point';
 import {createEventTemplate} from './components/events-item';
@@ -72,7 +72,7 @@ renderElement(tripMainMenuElement, new SiteMenuView().getElement(), renderPositi
 renderElement(tripControlElement, new FiltersView().getElement(), renderPosition.BEFOREEND);
 
 // sort buttons (event, time, price);
-renderTemplate(tripBoardsElement, createSortTemplate());
+renderElement(tripBoardsElement, new SortTripView().getElement(), renderPosition.BEFOREEND);
 
 // event edit or new event form
 renderTemplate(tripBoardsElement, createEventEditTemplate(allPointInfo[0][0]));
