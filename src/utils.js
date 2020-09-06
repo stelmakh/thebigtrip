@@ -1,3 +1,45 @@
+export const renderPosition = {
+  BEFOREEND: `beforeend`,
+  AFTERBEGIN: `afterbegin`,
+};
+/**
+ * render html element in container
+ * @param {HTMLElement} container
+ * @param {HTMLElement} element
+ * @param {string} place
+ */
+export const renderElement = (container, element, place) => {
+  switch (place) {
+    case renderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case renderPosition.BEFOREEND:
+      container.append(element);
+      break;
+  }
+};
+
+/**
+ * renderTemplate HTML
+ * @param {object} container
+ * @param {string} template
+ * @param {string} place
+ */
+export const renderTemplate = (container, template, place = `beforeend`) => {
+  container.insertAdjacentHTML(place, template);
+};
+
+/**
+ * create element in empty div and return without this div
+ * @param {string} template
+ * @return {ChildNode}
+ */
+export const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+  return newElement.firstChild;
+};
+
 /**
  * generate random integer
  * @param {number} a
