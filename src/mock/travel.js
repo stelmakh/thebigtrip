@@ -1,17 +1,17 @@
-import {generateStartTime, getRandomInteger} from '../utils';
+import {generateStartMoment, getRandomInteger} from '../utils';
 import {generateTravelPoint} from './point';
 
-const oneTravelPoint = ()=> {
-  return Array(getRandomInteger(getRandomInteger(2,5)))
-  .fill()
-  .map(generateTravelPoint);
-  }
+const oneTravelPoint = () => {
+  return Array(getRandomInteger(getRandomInteger(2, 5)))
+    .fill(undefined)
+    .map(generateTravelPoint);
+};
 
 export const travelPoint = () => {
   return {
-    day: generateStartTime(),
+    day: generateStartMoment(),
     info: oneTravelPoint(),
-  }
-}
+  };
+};
 
 

@@ -9,8 +9,9 @@ import TripCostView from './components/trip-cost';
 import DayView from './components/day';
 import {allPointInfo, travelPointAll, travelDays, travelPoints} from './computed';
 import {EVENT_DAY} from './constants';
-import {render, renderPosition} from './utils';
+import {render, renderPosition, test1} from './utils';
 
+console.log(test1);
 
 const tripMainElement = document.querySelector(`.trip-main`);
 const tripControlElement = tripMainElement.querySelector(`.trip-controls`);
@@ -76,7 +77,7 @@ const tripsEventsListElement = tripBoardsElement.querySelectorAll(`.trip-events_
 tripsEventsListElement.forEach((item, index) => {
   const dayInfo = allPointInfo[index]
     .sort((a, b) => {
-      return a.startTime.getTime() - b.startTime.getTime();
+      return a.startTime.diff(b.startTime);
     });
   for (let i = 0; i < dayInfo.length; i += 1) {
     // render(item, new EventsItemView(dayInfo[i]).getElement(), renderPosition.BEFOREEND);

@@ -1,4 +1,4 @@
-import {humanizeDate, createElement} from '../utils';
+import {createElement, getMomentMonthAsString} from '../utils';
 
 const createTripInfoTemplate = (travelPoints, travelDays) => {
   const {firstPoint, middlePoint, finalPoint} = travelPoints;
@@ -8,7 +8,7 @@ const createTripInfoTemplate = (travelPoints, travelDays) => {
     `<section class="trip-main__trip-info  trip-info">
        <div class="trip-info__main">
           <h1 class="trip-info__title">${firstPoint} &mdash; ${middlePoint} &mdash; ${finalPoint}</h1>
-          <p class="trip-info__dates">${humanizeDate(firstDay)}&nbsp;&mdash;&nbsp;${humanizeDate(lastDay)}</p>
+          <p class="trip-info__dates">${getMomentMonthAsString(firstDay)}&nbsp;&mdash;&nbsp;${getMomentMonthAsString(lastDay)}</p>
        </div>
      </section>`
   );

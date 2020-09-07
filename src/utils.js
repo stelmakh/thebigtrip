@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const renderPosition = {
   BEFOREEND: `beforeend`,
   AFTERBEGIN: `afterbegin`,
@@ -52,90 +54,101 @@ export const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-export const humanizeDate = (date) => {
-  return date.toLocaleString(
-      `en-US`, {
-        day: `numeric`,
-        month: `short`,
-      });
+
+/**
+ * generate random start date between -dayGap and dayGap
+ * @return {moment.Moment}
+ */
+export const generateStartMoment = () => {
+  const maxDaysGap = 7;
+  return moment()
+    .add(getRandomInteger(-maxDaysGap, maxDaysGap), `days`)
+    .hours(getRandomInteger(0, 23))
+    .minutes(5 * (getRandomInteger(0, 11)));
 };
 
-// Transform date to hours and minutes
-export function prettyDate(time) {
-  return time.toLocaleTimeString(navigator.language, {
-    hour12: false,
-    hour: `2-digit`,
-    minute: `2-digit`,
-  });
-}
+/**
+ * generate random event end date
+ * @param {object} startMoment
+ * @return {moment.Moment}
+ */
+export const generateEndMoment = (startMoment) => {
+  return moment(startMoment)
+    .add(getRandomInteger(1, 2), `days`)
+    .hours(getRandomInteger(0, 23), `hour`)
+    .minutes(5 * getRandomInteger(0, 11));
+};
 
-export const getTimeBetween = (startDate, endDate) => {
-  const gap = endDate.getTime() - startDate.getTime();
-  const day = Math.floor(gap / 1000 / 60 / 60 / 24);
-  const hour = Math.floor((gap / 1000 / 60 / 60) % 24);
-  const minute = Math.floor((gap / 1000 / 60) % 60);
+/**
+ * format date like '13:00'
+ * @param {object}inputMoment
+ * @return {string}
+ */
+export const getMomentTimeAsString = (inputMoment) => {
+  return moment(inputMoment).format(`HH:mm`);
+};
 
+/**
+ * format date like '04 or 11 or 15'
+ * @param {object} inputMoment
+ * @return {string}
+ */
+export const getMomentDaysAsString = (inputMoment) => {
+  return moment(inputMoment).format(`DD`);
+};
+
+/**
+ * format date like 'Sep 05'
+ * @param {object} inputMoment
+ * @return {string}
+ */
+export const getMomentMonthAsString = (inputMoment) => {
+  return moment(inputMoment).format(`MMM DD`);
+};
+
+/**
+ * Format date like '2020-09-14T11:05:56.926Z'
+ * @param {object} inputMoment
+ * @return {string}
+ */
+export const getMomentISOFormat = (inputMoment) => {
+  return moment(inputMoment).toISOString();
+};
+
+/**
+ * Format date like '20/09/14 06:55'
+ * @param {object} inputMoment
+ * @return {string}
+ */
+export const getMomentSlashedFormat = (inputMoment) => {
+  return moment(inputMoment).format(`YY/MM/DD HH:mm`);
+};
+
+/**
+ *
+ * @param {object} startMoment
+ * @param {object} endMoment
+ * @return {string}
+ */
+export const getTimeBetween = (startMoment, endMoment) => {
+  const day = moment(endMoment).diff(startMoment, `days`);
+  const hour = moment(endMoment).diff(startMoment, `hours`) % 24;
+  const minute = moment(endMoment).diff(startMoment, `minute`) % 60;
   let gapString = ``;
-
   if (day > 0) {
-    gapString += day > 9
-      ? day
-      : `0` + day;
-    gapString += `D `;
+    gapString += day.toString().padStart(2, `0`) + `D `;
   }
   if (hour > 0) {
-    gapString += hour > 9
-      ? hour
-      : `0` + hour;
-    gapString += `H `;
+    gapString += hour.toString().padStart(2, `0`) + `H `;
   }
   if (minute > 0) {
-    gapString += minute > 9
-      ? minute
-      : `0` + minute;
-    gapString += `M`;
+    gapString += minute.toString().padStart(2, `0`) + `M `;
   }
 
   return gapString;
+
 };
 
-
-export function diffMinutes(dt2, dt1) {
-  let diff = (dt2.getTime() - dt1.getTime()) / 1000;
-  diff = diff / 60;
-  return Math.abs(Math.round(diff));
-}
-
-export const getDateISOFormat = (date) => {
-  return date.toISOString();
-};
-
-/**
- * Generate start event date
- * @return {Date}
- */
-export const generateStartTime = () => {
-  const maxDaysGap = 7;
-  const daysGap = getRandomInteger(-maxDaysGap, maxDaysGap);
-  const startTime = new Date();
-  startTime.setDate(startTime.getDate() + daysGap);
-  const hours = getRandomInteger(0, 23);
-  const minutes = 5 * getRandomInteger(0, 11);
-
-  startTime.setHours(hours, minutes, 0, 0);
-  return new Date(startTime);
-};
-
-/**
- * Generate end event date
- * @param {Date} startTime
- * @return {Date}
- */
-export const generateEndTime = (startTime) => {
-  const endTime = new Date(startTime);
-  const day = getRandomInteger(0, 2);
-  const hour = getRandomInteger(0, 23);
-  const minutes = 5 * getRandomInteger(0, 11);
-  endTime.setTime(startTime.getTime() + (day * 24 * 60 * 60 * 1000) + (hour * 60 * 60 * 1000) + (minutes * 60 * 1000));
-  return new Date(endTime);
-};
+const test = generateStartMoment();
+const test2 = generateEndMoment(test);
+export const test1 = getTimeBetween(test, test2);

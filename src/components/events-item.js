@@ -1,4 +1,4 @@
-import {prettyDate, getTimeBetween, createElement} from '../utils';
+import {getTimeBetween, getMomentTimeAsString, getMomentISOFormat, createElement} from '../utils';
 
 /**
  * @param {array|null} additionalOffers
@@ -33,9 +33,9 @@ const createEventTemplate = (eventData) => {
       <h3 class="event__title">${point} to ${city}</h3>
       <div class="event__schedule">
         <p class="event__time">
-          <time class="event__start-time" datetime="2019-03-18T10:30">${prettyDate(startTime)}</time>
+          <time class="event__start-time" datetime="${getMomentISOFormat(startTime)}">${getMomentTimeAsString(startTime)}</time>
           &mdash;
-          <time class="event__end-time" datetime="2019-03-18T11:00">${prettyDate(endTime)}</time>
+          <time class="event__end-time" datetime="${getMomentISOFormat(endTime)}">${getMomentTimeAsString(endTime)}</time>
         </p>
         <p class="event__duration">${getTimeBetween(startTime, endTime)}</p>
       </div>

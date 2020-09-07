@@ -1,5 +1,4 @@
-import {getRandomInteger, generateStartTime, generateEndTime} from '../utils';
-import {EVENT_COUNT} from '../constants';
+import {getRandomInteger, generateStartTime, generateEndTime, generateStartMoment, generateEndMoment} from '../utils';
 
 const points = [`taxi`, `bus`, `train`, `ship`, `transport`, `drive`, `flight`, `check-in`, `sightseeing`, `restaurant`];
 const cities = [`Oslo`, `Stockholm`, `Los-Angeles`, `New-York`, `Boston`, `Pekin`];
@@ -60,14 +59,13 @@ const generateDestination = ()=> {
 };
 
 
-
 const generatePrice = ()=> {
   return 10 * (getRandomInteger(1, 30));
 };
 
 export const generateTravelPoint = ()=> {
   const additionalOffer = generateAdditionalOffer();
-  const startTime = generateStartTime();
+  const startTime = generateStartMoment();
   return {
     price: generatePrice(),
     point: getRandomArrayItem(points),
@@ -75,12 +73,9 @@ export const generateTravelPoint = ()=> {
     additionalOffer: additionalOffer.length === 0 ? null : additionalOffer,
     description: generateDestination(),
     startTime,
-    endTime: generateEndTime(startTime),
+    endTime: generateEndMoment(startTime),
     isFavorite: Boolean(getRandomInteger(0, 1))
   };
 };
-
-
-
 
 

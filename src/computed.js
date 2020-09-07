@@ -7,7 +7,7 @@ export const travelPointAll = new Array(EVENT_DAY)
   .fill(undefined)
   .map(travelPoint)
   .sort((a, b) => {
-    return a.day.getTime() - b.day.getTime();
+    return a.day - b.day;
   });
 
 // only info array
