@@ -64,7 +64,7 @@ export const generateStartMoment = () => {
   return moment()
     .add(getRandomInteger(-maxDaysGap, maxDaysGap), `days`)
     .hours(getRandomInteger(0, 23))
-    .minutes(5 * (getRandomInteger(0, 11)));
+    .minutes(5 * getRandomInteger(0, 11));
 };
 
 /**
@@ -75,7 +75,7 @@ export const generateStartMoment = () => {
 export const generateEndMoment = (startMoment) => {
   return moment(startMoment)
     .add(getRandomInteger(1, 2), `days`)
-    .hours(getRandomInteger(0, 23), `hour`)
+    .hours(getRandomInteger(0, 23))
     .minutes(5 * getRandomInteger(0, 11));
 };
 
