@@ -14,6 +14,13 @@ export const travelPointAll = new Array(EVENT_DAY)
 export const allPointInfo = travelPointAll.map((item) => {
   return item.info;
 });
+
+export const allPointPrice = allPointInfo
+  .map((item) => {
+    return item.reduce((sum, current) => sum + current.price, 0);
+  })
+  .reduce((sum, current) => sum + current, 0);
+
 /**
  * @description find travel points
  * @return {{finalPoint: string, firstPoint: string, middlePoint: string}}
@@ -29,7 +36,7 @@ const findTravelPoints = () => {
   return {
     firstPoint,
     middlePoint,
-    finalPoint
+    finalPoint,
   };
 };
 /**

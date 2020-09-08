@@ -9,9 +9,13 @@ import TripCostView from './components/trip-cost';
 import DayView from './components/day';
 import {allPointInfo, travelPointAll, travelDays, travelPoints} from './computed';
 import {EVENT_DAY} from './constants';
-import {render, renderPosition, test1} from './utils';
+import {render, renderPosition} from './utils';
 
-console.log(test1);
+const test2 = allPointInfo
+  .map((item) => {
+    return item.reduce((sum, current) => sum + current.price, 0);
+  }).reduce((sum, current)=> sum + current, 0);
+console.log(test2);
 
 const tripMainElement = document.querySelector(`.trip-main`);
 const tripControlElement = tripMainElement.querySelector(`.trip-controls`);
@@ -63,6 +67,12 @@ const eventRender = (container, eventData) => {
   });
 
   eventEditComponent.getElement().querySelector(`form`).addEventListener(`submit`, (evt) => {
+    evt.preventDefault();
+    replaceFormToCard();
+    document.removeEventListener(`keydown`, onEscDown);
+  });
+
+  eventEditComponent.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, (evt) => {
     evt.preventDefault();
     replaceFormToCard();
     document.removeEventListener(`keydown`, onEscDown);

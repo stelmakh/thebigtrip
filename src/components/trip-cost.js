@@ -1,9 +1,10 @@
-import {getRandomInteger, createElement} from '../utils';
+import {createElement} from '../utils';
+import {allPointPrice} from '../computed';
 
 const createTripCostTemplate = () => {
   return (
     `<section class="trip-main__trip-info  trip-info">
-       <p class="trip-info__cost">Total: &euro;&nbsp;<span class="trip-info__cost-value">${getRandomInteger(0, 400) * 10}</span></p>
+       <p class="trip-info__cost">Total: &euro;&nbsp;<span class="trip-info__cost-value">${allPointPrice}</span></p>
      </section>`
   );
 };
