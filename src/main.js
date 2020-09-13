@@ -11,12 +11,6 @@ import {allPointInfo, travelPointAll, travelDays, travelPoints} from './computed
 import {EVENT_DAY} from './constants';
 import {render, renderPosition} from './utils';
 
-const test2 = allPointInfo
-  .map((item) => {
-    return item.reduce((sum, current) => sum + current.price, 0);
-  }).reduce((sum, current)=> sum + current, 0);
-console.log(test2);
-
 const tripMainElement = document.querySelector(`.trip-main`);
 const tripControlElement = tripMainElement.querySelector(`.trip-controls`);
 const tripMainMenuElement = tripControlElement.querySelector(`.visually-hidden:first-of-type`);

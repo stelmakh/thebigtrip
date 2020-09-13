@@ -25,7 +25,7 @@ export const allPointPrice = allPointInfo
  * @description find travel points
  * @return {{finalPoint: string, firstPoint: string, middlePoint: string}}
  */
-const findTravelPoints = () => {
+const getTravelPoints = () => {
   const firstTravelDay = allPointInfo[0];
   const middleTravelDay = allPointInfo[Math.round(allPointInfo.length / 2)];
   const lastTravelDay = allPointInfo[allPointInfo.length - 1];
@@ -43,7 +43,7 @@ const findTravelPoints = () => {
  * @description find start day travel and finally day travel;
  * @return {{firstDay, lastDay: (string|string)}}
  */
-const findTravelDays = () => {
+const getTravelDays = () => {
   const firstDay = travelPointAll[0].day;
   const lastDay = travelPointAll[travelPointAll.length - 1].day;
 
@@ -53,5 +53,5 @@ const findTravelDays = () => {
   };
 };
 
-export const travelPoints = findTravelPoints();
-export const travelDays = findTravelDays();
+export const travelPoints = getTravelPoints();
+export const travelDays = getTravelDays();
