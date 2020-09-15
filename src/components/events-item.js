@@ -63,4 +63,9 @@ export default class EventsItem extends AbstractView {
   getTemplate() {
     return createEventTemplate(this._eventDate);
   }
+  setEditHandler(cb) {
+    this.getElement()
+      .querySelector(`.event__rollup-btn`)
+      .addEventListener(`click`, cb);
+  }
 }

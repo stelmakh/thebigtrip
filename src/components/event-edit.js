@@ -171,7 +171,16 @@ export default class EventEdit extends AbstractView {
     super();
     this._editData = editPointTemplateDate || {};
   }
+
   getTemplate() {
     return createEventEditTemplate(this._editData);
+  }
+
+  setSubmitHandler(cb) {
+    this.getElement().querySelector(`form`).addEventListener(`submit`, cb);
+  }
+
+  setCancelHanlder(cb) {
+    this.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, cb);
   }
 }

@@ -47,18 +47,18 @@ const eventRender = (container, eventData) => {
     }
   };
 
-  eventComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
+  eventComponent.setEditHandler(() => {
     replace(eventEditComponent, eventComponent);
     document.addEventListener(`keydown`, onEscDown);
   });
 
-  eventEditComponent.getElement().querySelector(`form`).addEventListener(`submit`, (evt) => {
+  eventEditComponent.setSubmitHandler((evt) => {
     evt.preventDefault();
     replace(eventComponent, eventEditComponent);
     document.removeEventListener(`keydown`, onEscDown);
   });
 
-  eventEditComponent.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, (evt) => {
+  eventEditComponent.setCancelHanlder((evt) => {
     evt.preventDefault();
     replace(eventComponent, eventEditComponent);
     document.removeEventListener(`keydown`, onEscDown);
