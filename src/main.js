@@ -9,7 +9,7 @@ import TripCostView from './components/trip-cost';
 import DayView from './components/day';
 import {allPointInfo, travelPointAll, travelDays, travelPoints} from './computed';
 import {EVENT_DAY} from './constants';
-import {render, renderPosition} from './utils/render';
+import {render, replace, renderPosition} from './utils/render';
 
 const tripMainElement = document.querySelector(`.trip-main`);
 const tripControlElement = tripMainElement.querySelector(`.trip-controls`);
@@ -17,62 +17,54 @@ const tripMainMenuElement = tripControlElement.querySelector(`.visually-hidden:f
 const tripBoardsElement = document.querySelector(`.trip-events`);
 
 // Menu template (Table, Stats)
-render(tripMainMenuElement, new SiteMenuView().getElement(), renderPosition.AFTERBEGIN);
+render(tripMainMenuElement, new SiteMenuView(), renderPosition.AFTERBEGIN);
 
 // Filter template (everything, future, past)
-render(tripControlElement, new FiltersView().getElement(), renderPosition.BEFOREEND);
+render(tripControlElement, new FiltersView(), renderPosition.BEFOREEND);
 
 // sort buttons (event, time, price);
-render(tripBoardsElement, new SortTripView().getElement(), renderPosition.BEFOREEND);
+render(tripBoardsElement, new SortTripView(), renderPosition.BEFOREEND);
 
 // trip days container
-render(tripBoardsElement, new EventPointsView().getElement(), renderPosition.BEFOREEND);
+render(tripBoardsElement, new EventPointsView(), renderPosition.BEFOREEND);
 
 const tripDays = tripBoardsElement.querySelector(`.trip-days`);
 
 // renderTemplate day item
 for (let i = 0; i < EVENT_DAY; i += 1) {
-  render(tripDays, new DayView(travelPointAll[i], i).getElement(), renderPosition.BEFOREEND);
+  render(tripDays, new DayView(travelPointAll[i], i), renderPosition.BEFOREEND);
 }
 
 const eventRender = (container, eventData) => {
   const eventComponent = new EventsItemView(eventData);
   const eventEditComponent = new EventEditView(eventData);
 
-  const replaceCardToForm = () => {
-    container.replaceChild(eventEditComponent.getElement(), eventComponent.getElement());
-  };
-
-  const replaceFormToCard = () => {
-    container.replaceChild(eventComponent.getElement(), eventEditComponent.getElement());
-  };
-
   const onEscDown = (evt) => {
     if (evt.key === `Escape` || evt.key === `Esc`) {
       evt.preventDefault();
-      replaceFormToCard();
+      replace(eventComponent, eventEditComponent);
       document.removeEventListener(`keydown`, onEscDown);
     }
   };
 
   eventComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
-    replaceCardToForm();
+    replace(eventEditComponent, eventComponent);
     document.addEventListener(`keydown`, onEscDown);
   });
 
   eventEditComponent.getElement().querySelector(`form`).addEventListener(`submit`, (evt) => {
     evt.preventDefault();
-    replaceFormToCard();
+    replace(eventComponent, eventEditComponent);
     document.removeEventListener(`keydown`, onEscDown);
   });
 
   eventEditComponent.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, (evt) => {
     evt.preventDefault();
-    replaceFormToCard();
+    replace(eventComponent, eventEditComponent);
     document.removeEventListener(`keydown`, onEscDown);
   });
 
-  render(container, eventComponent.getElement(), renderPosition.BEFOREEND);
+  render(container, eventComponent, renderPosition.BEFOREEND);
 };
 
 
@@ -84,7 +76,6 @@ tripsEventsListElement.forEach((item, index) => {
       return a.startTime.diff(b.startTime);
     });
   for (let i = 0; i < dayInfo.length; i += 1) {
-    // render(item, new EventsItemView(dayInfo[i]).getElement(), renderPosition.BEFOREEND);
     eventRender(item, dayInfo[i]);
   }
 });
@@ -94,5 +85,5 @@ render(tripMainElement, new TripInfoView(travelPoints, travelDays).getElement(),
 const tripInfoElement = tripMainElement.querySelector(`.trip-main__trip-info`);
 
 // top trip info cost
-render(tripInfoElement, new TripCostView().getElement(), renderPosition.BEFOREEND);
+render(tripInfoElement, new TripCostView(), renderPosition.BEFOREEND);
 

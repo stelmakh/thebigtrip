@@ -6,8 +6,8 @@ export const renderPosition = {
 };
 /**
  * render html element in container
- * @param {HTMLElement} container
- * @param {HTMLElement} child
+ * @param {Element} container
+ * @param {Component} child
  * @param {string} place
  */
 export const render = (container, child, place) => {
