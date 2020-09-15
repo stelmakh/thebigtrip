@@ -1,4 +1,5 @@
-import {capitalize, getTimeBetween, getMomentTimeAsString, getMomentISOFormat, createElement} from '../utils';
+import {capitalize, getTimeBetween, getMomentTimeAsString, getMomentISOFormat} from '../utils';
+import AbstractView from './abstract';
 
 /**
  * @param {array|null} additionalOffers
@@ -54,21 +55,12 @@ const createEventTemplate = (eventData) => {
   );
 };
 
-export default class EventsItem {
+export default class EventsItem extends AbstractView {
   constructor(eventData) {
+    super();
     this._eventDate = eventData;
-    this._element = null;
   }
   getTemplate() {
     return createEventTemplate(this._eventDate);
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }

@@ -1,4 +1,5 @@
-import {createElement, getMomentMonthAsString} from '../utils';
+import {getMomentMonthAsString} from '../utils';
+import AbstractView from './abstract';
 
 const createTripInfoTemplate = (travelPoints, travelDays) => {
   const {firstPoint, middlePoint, finalPoint} = travelPoints;
@@ -14,23 +15,14 @@ const createTripInfoTemplate = (travelPoints, travelDays) => {
   );
 };
 
-export default class TripInfo {
+export default class TripInfo extends AbstractView {
   constructor(travelPoints, travelDays) {
-    this._element = null;
+    super();
     this._travelPoints = travelPoints;
     this._travelDays = travelDays;
   }
   getTemplate() {
     return createTripInfoTemplate(this._travelPoints, this._travelDays);
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }
 

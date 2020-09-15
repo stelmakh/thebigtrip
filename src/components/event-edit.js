@@ -1,4 +1,5 @@
-import {createElement, getMomentSlashedFormat, capitalize} from '../utils';
+import {getMomentSlashedFormat, capitalize} from '../utils';
+import AbstractView from './abstract';
 
 
 /**
@@ -165,21 +166,12 @@ export const createEventEditTemplate = (editPointTemplateDate = {}) => {
   );
 };
 
-export default class EventEdit {
+export default class EventEdit extends AbstractView {
   constructor(editPointTemplateDate) {
-    this._element = null;
+    super();
     this._editData = editPointTemplateDate || {};
   }
   getTemplate() {
     return createEventEditTemplate(this._editData);
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }

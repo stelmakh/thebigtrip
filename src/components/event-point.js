@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import AbstractView from './abstract';
 
 const createEventPointTemplate = () => {
   return (
@@ -6,20 +6,8 @@ const createEventPointTemplate = () => {
   );
 };
 
-export default class EventPoints {
-  constructor() {
-    this._element = null;
-  }
+export default class EventPoints extends AbstractView {
   getTemplate() {
     return createEventPointTemplate();
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }

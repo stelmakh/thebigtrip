@@ -1,4 +1,5 @@
-import {createElement, getMomentMonthAsString} from '../utils';
+import {getMomentMonthAsString} from '../utils';
+import AbstractView from './abstract';
 
 export const createDayTemplate = (info, index) => {
   const {day} = info;
@@ -11,22 +12,13 @@ export const createDayTemplate = (info, index) => {
       </li>`;
 };
 
-export default class Day {
+export default class Day extends AbstractView {
   constructor(info, index) {
-    this._element = null;
+    super();
     this._info = info;
     this._index = index;
   }
   getTemplate() {
     return createDayTemplate(this._info, this._index);
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate(this._info, this._index));
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }
