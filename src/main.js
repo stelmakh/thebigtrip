@@ -9,7 +9,7 @@ import TripCostView from './components/trip-cost';
 import DayView from './components/day';
 import {allPointInfo, travelPointAll, travelDays, travelPoints} from './computed';
 import {EVENT_DAY} from './constants';
-import {render, renderPosition} from './utils';
+import {render, renderPosition} from './utils/render';
 
 const tripMainElement = document.querySelector(`.trip-main`);
 const tripControlElement = tripMainElement.querySelector(`.trip-controls`);
