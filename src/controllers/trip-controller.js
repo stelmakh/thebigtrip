@@ -1,5 +1,4 @@
 import {replace, render, renderPosition} from '../utils/render';
-import {sortType, sortDirection} from '../constants';
 import DayView from '../components/day';
 import EventsItemView from '../components/events-item';
 import EventEditView from '../components/event-edit';
@@ -8,12 +7,13 @@ import SortTripView from '../components/sort-trip';
 
 export default class TripController {
   constructor(container, allDayData, allPointInfo) {
+    this._sortComponent = new SortTripView();
     this._container = container;
     this._allPointInfo = allPointInfo;
     this._allDay = allDayData;
-    this._currentSortType = sortType.EVENT;
-    this._currentSortDirection = sortDirection.DEFAULT;
-    // this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
+
+    this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
+
   }
 
   render() {
@@ -21,10 +21,16 @@ export default class TripController {
     this._renderDaysContainer();
     this._renderDays();
     this._renderEventsInDay();
+
   }
 
   _renderSort() {
-    render(this._container, new SortTripView(), renderPosition.BEFOREEND);
+    render(this._container, this._sortComponent, renderPosition.BEFOREEND);
+    this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
+  }
+
+  _handleSortTypeChange() {
+    console.log(`1`);
   }
 
   _renderDaysContainer() {

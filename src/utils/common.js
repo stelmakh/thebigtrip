@@ -1,5 +1,3 @@
-
-
 /**
  * generate random integer
  * @param {number} a

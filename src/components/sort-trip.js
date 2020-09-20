@@ -1,5 +1,5 @@
 import AbstractView from './abstract';
-import {sortType} from '../constants';
+import {SortType} from '../constants';
 
 export const createSortTemplate = () => {
   return (
@@ -12,7 +12,7 @@ export const createSortTemplate = () => {
       name="trip-sort"
       value="sort-event"
       checked
-      data-sort-type="${sortType.EVENT}">
+      data-sort-type="${SortType.EVENT}">
       <label class="trip-sort__btn" for="sort-event">Event</label>
     </div>
     <div class="trip-sort__item  trip-sort__item--time">
@@ -21,7 +21,7 @@ export const createSortTemplate = () => {
       type="radio"
       name="trip-sort"
       value="sort-time"
-      data-sort-type="${sortType.TIME}">
+      data-sort-type="${SortType.TIME}">
       <label class="trip-sort__btn" for="sort-time">
         Time
         <svg class="trip-sort__direction-icon" width="8" height="10" viewBox="0 0 8 10">
@@ -34,7 +34,7 @@ export const createSortTemplate = () => {
       class="trip-sort__input  visually-hidden"
       type="radio" name="trip-sort"
       value="sort-price"
-      data-sort-type="${sortType.PRICE}">
+      data-sort-type="${SortType.PRICE}">
       <label class="trip-sort__btn" for="sort-price">
         Price
         <svg class="trip-sort__direction-icon" width="8" height="10" viewBox="0 0 8 10">
@@ -53,20 +53,18 @@ export default class SortTrip extends AbstractView {
     super();
     this._sortTypeChangeHandler = this._sortTypeChangeHandler.bind(this);
   }
+
   getTemplate() {
     return createSortTemplate();
   }
 
   _sortTypeChangeHandler(evt) {
-    if (evt.target.tagName !== `div`) {
-      return;
-    }
     evt.preventDefault();
     this._callback.sortTypeChange(evt.target.dataset.sortType);
   }
 
   setSortTypeChangeHandler(callback) {
     this._callback.sortTypeChange = callback;
-    this.getElement().addEventListener(`click`, this._sortTypeChangeHandler);
+    this.getElement().addEventListener(`change`, this._sortTypeChangeHandler);
   }
 }
