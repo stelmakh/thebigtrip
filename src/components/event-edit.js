@@ -1,4 +1,5 @@
-import {getMomentSlashedFormat, capitalize} from '../utils';
+import {getMomentSlashedFormat} from '../utils/moment';
+import {capitalize} from '../utils/common';
 import AbstractView from './abstract';
 
 

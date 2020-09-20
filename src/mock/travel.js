@@ -1,5 +1,6 @@
-import {generateStartMoment, getRandomInteger} from '../utils';
+import {generateStartMoment} from '../utils/moment';
 import {generateTravelPoint} from './point';
+import {getRandomInteger} from '../utils/common';
 
 const oneTravelPoint = () => {
   return Array(getRandomInteger(getRandomInteger(2, 5)))

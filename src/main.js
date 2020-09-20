@@ -1,7 +1,5 @@
 import SiteMenuView from './components/site-menu';
 import FiltersView from './components/filters';
-import SortTripView from './components/sort-trip';
-import EventPointsView from './components/event-point';
 import TripInfoView from './components/trip-info';
 import TripCostView from './components/trip-cost';
 import TripController from './controllers/trip-controller';
@@ -27,12 +25,7 @@ render(tripInfoElement, new TripCostView(), renderPosition.BEFOREEND);
 // Filter template (everything, future, past)
 render(tripControlElement, new FiltersView(), renderPosition.BEFOREEND);
 
-// sort buttons (event, time, price);
-render(tripBoardsElement, new SortTripView(), renderPosition.BEFOREEND);
-
-// trip days container
-render(tripBoardsElement, new EventPointsView(), renderPosition.BEFOREEND);
-
+// all events presenter
 const tripPresenter = new TripController(tripBoardsElement, travelPointAll, allPointInfo);
 tripPresenter.render();
 

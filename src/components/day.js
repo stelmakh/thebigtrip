@@ -1,4 +1,4 @@
-import {getMomentMonthAsString} from '../utils';
+import {getMomentMonthAsString} from '../utils/moment';
 import AbstractView from './abstract';
 
 export const createDayTemplate = (info, index) => {

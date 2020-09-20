@@ -1,20 +1,35 @@
-import {EVENT_DAY} from '../constants';
 import {replace, render, renderPosition} from '../utils/render';
+import {sortType, sortDirection} from '../constants';
 import DayView from '../components/day';
 import EventsItemView from '../components/events-item';
 import EventEditView from '../components/event-edit';
+import EventPointsView from '../components/event-point';
+import SortTripView from '../components/sort-trip';
 
 export default class TripController {
   constructor(container, allDayData, allPointInfo) {
     this._container = container;
     this._allPointInfo = allPointInfo;
     this._allDay = allDayData;
-    this._tripDays = this._container.querySelector(`.trip-days`);
+    this._currentSortType = sortType.EVENT;
+    this._currentSortDirection = sortDirection.DEFAULT;
+    // this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
   }
 
   render() {
+    this._renderSort();
+    this._renderDaysContainer();
     this._renderDays();
     this._renderEventsInDay();
+  }
+
+  _renderSort() {
+    render(this._container, new SortTripView(), renderPosition.BEFOREEND);
+  }
+
+  _renderDaysContainer() {
+    render(this._container, new EventPointsView(), renderPosition.BEFOREEND);
+    this._tripDays = this._container.querySelector(`.trip-days`);
   }
 
   _renderDays() {

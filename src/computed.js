@@ -1,5 +1,5 @@
 import {travelPoint} from './mock/travel';
-import {getRandomInteger} from './utils';
+import {getRandomInteger} from './utils/common';
 import {EVENT_DAY} from './constants';
 
 // generate all mock day

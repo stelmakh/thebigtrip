@@ -1,4 +1,5 @@
-import {capitalize, getTimeBetween, getMomentTimeAsString, getMomentISOFormat} from '../utils';
+import {getTimeBetween, getMomentTimeAsString, getMomentISOFormat} from '../utils/moment';
+import {capitalize} from '../utils/common';
 import AbstractView from './abstract';
 
 /**

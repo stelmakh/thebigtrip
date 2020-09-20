@@ -1,4 +1,5 @@
-import {getRandomInteger, generateStartTime, generateEndTime, generateStartMoment, generateEndMoment} from '../utils';
+import {generateStartMoment, generateEndMoment} from '../utils/moment';
+import {getRandomInteger} from '../utils/common';
 
 const points = [`taxi`, `bus`, `train`, `ship`, `transport`, `drive`, `flight`, `check-in`, `sightseeing`, `restaurant`];
 const cities = [`Oslo`, `Stockholm`, `Los-Angeles`, `New-York`, `Boston`, `Pekin`];
