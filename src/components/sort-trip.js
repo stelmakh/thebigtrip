@@ -60,6 +60,7 @@ export default class SortTrip extends AbstractView {
 
   _sortTypeChangeHandler(evt) {
     evt.preventDefault();
+    // Passing event information to the callback
     this._callback.sortTypeChange(evt.target.dataset.sortType);
   }
 
