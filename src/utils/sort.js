@@ -1,11 +1,20 @@
 import moment from 'moment';
 
 
-export const sortTaskUp = (taskA, taskB) => {
-  return taskA.day.hours() - taskB.day.hours();
+export const sortTaskPrice = (taskA, taskB) => {
 
+  taskA.sort((item1, item2)=>{
+    return item1.price - item2.price;
+  });
+
+  taskB.sort((item1, item2)=>{
+    return item1.price - item2.price;
+  });
+
+  return taskA[0].price - taskB[0].price;
 };
 
-export const sortTaskDown = (taskA, taskB) => {
-  return taskB.day.hours() - taskA.day.hours();
+export const sortTaskTime = (taskA, taskB) => {
+  console.log(taskA[0].startTime, taskB[0].startTime);
+  return taskA[0].startTime.diff(taskB[0].startTime, `hours`);
 };

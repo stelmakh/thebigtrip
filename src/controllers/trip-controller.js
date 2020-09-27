@@ -5,7 +5,7 @@ import EventEditView from '../components/event-edit';
 import EventPointsView from '../components/event-point';
 import SortTripView from '../components/sort-trip';
 import {SortType} from '../constants';
-import {sortTaskUp, sortTaskDown} from '../utils/sort';
+import {sortTaskPrice, sortTaskTime} from '../utils/sort';
 
 export default class TripController {
   constructor(container, allDayData, allPointInfo) {
@@ -13,6 +13,8 @@ export default class TripController {
     this._container = container;
     this._allPointInfo = allPointInfo;
     this._allDay = allDayData;
+    // shallow copy for default sort
+    this._defaultDay = this._allPointInfo.slice();
 
     this._currentSortType = SortType.EVENT;
 
@@ -24,8 +26,6 @@ export default class TripController {
     this._renderSort();
     this._renderDaysContainer();
     this._renderDays();
-    this._renderEventsInDay();
-
   }
 
   _renderSort() {
@@ -39,14 +39,13 @@ export default class TripController {
     // массив в свойстве _boardTasks
     switch (sortType) {
       case SortType.TIME:
-        this._allDay.sort(sortTaskUp);
+        this._allPointInfo.sort(sortTaskTime);
         break;
       case SortType.PRICE:
-        this._allDay.sort(sortTaskDown);
+        this._allPointInfo.sort(sortTaskPrice);
         break;
-      case SortType.EVENT:
-        this._allDay.sort(sortTaskDown);
-        break;
+      default:
+        this._allPointInfo = this._defaultDay.slice();
     }
 
     this._currentSortType = sortType;
@@ -67,7 +66,7 @@ export default class TripController {
     this._clearTaskList();
     // - Рендерим список заново
     this._renderDays();
-    this._renderEventsInDay();
+    // this._renderEventsInDay();
   }
 
   _renderDaysContainer() {
@@ -77,7 +76,10 @@ export default class TripController {
 
   _renderDays() {
     for (const [index, travelDay] of this._allDay.entries()) {
-      render(this._tripDays, new DayView(travelDay, index), renderPosition.BEFOREEND);
+      const day = new DayView(travelDay, index);
+      const eventsList = day.getElement().querySelector(`.trip-events__list`);
+      render(this._tripDays, day, renderPosition.BEFOREEND);
+      this._renderEventsInDay(eventsList, travelDay.info);
     }
   }
 
@@ -113,14 +115,11 @@ export default class TripController {
     render(container, eventComponent, renderPosition.BEFOREEND);
   }
 
-  _renderEventsInDay() {
-    const tripsEventsListElement = this._container.querySelectorAll(`.trip-events__list`);
-    tripsEventsListElement.forEach((item, index) => {
-      const dayInfo = this._sortEventsByTime(this._allPointInfo[index]);
-      for (const day of dayInfo) {
-        this._renderEvent(item, day);
-      }
-    });
+  _renderEventsInDay(day, info) {
+    const dayInfo = this._sortEventsByTime(info);
+    for (const eventInfo of dayInfo) {
+      this._renderEvent(day, eventInfo);
+    }
   }
 
   _sortEventsByTime(eventItem) {
