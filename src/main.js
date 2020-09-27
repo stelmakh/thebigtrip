@@ -3,14 +3,13 @@ import FiltersView from './components/filters';
 import TripInfoView from './components/trip-info';
 import TripCostView from './components/trip-cost';
 import TripController from './controllers/trip-controller';
-import {allPointInfo, travelPointAll, travelDays, travelPoints} from './computed';
+import {travelPointAll, travelDays, travelPoints} from './computed';
 import {render, renderPosition} from './utils/render';
 
 const tripMainElement = document.querySelector(`.trip-main`);
 const tripControlElement = tripMainElement.querySelector(`.trip-controls`);
 const tripMainMenuElement = tripControlElement.querySelector(`.visually-hidden:first-of-type`);
 const tripBoardsElement = document.querySelector(`.trip-events`);
-
 
 // Menu template (Table, Stats)
 render(tripMainMenuElement, new SiteMenuView(), renderPosition.AFTERBEGIN);
@@ -26,7 +25,7 @@ render(tripInfoElement, new TripCostView(), renderPosition.BEFOREEND);
 render(tripControlElement, new FiltersView(), renderPosition.BEFOREEND);
 
 // all events presenter
-const tripPresenter = new TripController(tripBoardsElement, travelPointAll, allPointInfo);
-tripPresenter.render();
+const tripPresenter = new TripController(tripBoardsElement, travelPointAll);
+tripPresenter.init();
 
 

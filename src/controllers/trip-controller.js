@@ -4,17 +4,17 @@ import EventsItemView from '../components/events-item';
 import EventEditView from '../components/event-edit';
 import EventPointsView from '../components/event-point';
 import SortTripView from '../components/sort-trip';
+import NoPoint from '../components/no-point';
 import {SortType} from '../constants';
 import {sortTaskPrice, sortTaskTime} from '../utils/sort';
 
 export default class TripController {
-  constructor(container, allDayData, allPointInfo) {
+  constructor(container, allDayData) {
     this._sortComponent = new SortTripView();
     this._container = container;
-    this._allPointInfo = allPointInfo;
     this._allDay = allDayData;
     // shallow copy for default sort
-    this._defaultDay = this._allPointInfo.slice();
+    this._defaultDay = this._allDay.slice();
 
     this._currentSortType = SortType.EVENT;
 
@@ -22,7 +22,11 @@ export default class TripController {
 
   }
 
-  render() {
+  init() {
+    if (this._allDay.length === 0) {
+      this._renderNoEvents();
+      return;
+    }
     this._renderSort();
     this._renderDaysContainer();
     this._renderDays();
@@ -39,13 +43,13 @@ export default class TripController {
     // массив в свойстве _boardTasks
     switch (sortType) {
       case SortType.TIME:
-        this._allPointInfo.sort(sortTaskTime);
+        this._allDay.sort(sortTaskTime);
         break;
       case SortType.PRICE:
-        this._allPointInfo.sort(sortTaskPrice);
+        this._allDay.sort(sortTaskPrice);
         break;
       default:
-        this._allPointInfo = this._defaultDay.slice();
+        this._allDay = this._defaultDay.slice();
     }
 
     this._currentSortType = sortType;
@@ -120,6 +124,10 @@ export default class TripController {
     for (const eventInfo of dayInfo) {
       this._renderEvent(day, eventInfo);
     }
+  }
+
+  _renderNoEvents() {
+    render(this._container, new NoPoint(), renderPosition.BEFOREEND);
   }
 
   _sortEventsByTime(eventItem) {

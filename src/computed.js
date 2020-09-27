@@ -11,7 +11,7 @@ export const travelPointAll = new Array(EVENT_DAY)
   });
 
 // only info array
-export const allPointInfo = travelPointAll.map((item) => {
+const allPointInfo = travelPointAll.map((item) => {
   return item.info;
 });
 
